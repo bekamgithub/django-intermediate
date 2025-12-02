@@ -1,0 +1,53 @@
+{% extends "book/base.html" %} {% block content %}
+
+<h3 class="mb-4 text-center">All Bookings</h3>
+<div class="mb-3 text-end">
+  <a href="{% url 'create_booking' %}" class="btn btn-primary">+ New Booking</a>
+</div>
+
+<p class="text-end"><strong>Total bookings: {{ bookings.count }}</strong></p>
+
+<table class="table table-striped table-bordered">
+  <thead class="table-dark">
+    <tr>
+      <th>Name</th>
+      <th>Service</th>
+      <th>Date</th>
+      <th>Time</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {% for booking in bookings %}
+    <tr>
+      <td>{{ booking.name }}</td>
+      <td>{{ booking.service }}</td>
+      <td>{{ booking.date }}</td>
+      <td>{{ booking.time }}</td>
+      <td>
+        {% if booking.status == "Pending" %}
+        <span class="badge bg-warning text-dark">Pending</span>
+        {% elif booking.status == "Approved" %}
+        <span class="badge bg-success">Approved</span>
+        {% elif booking.status == "Rejected" %}
+        <span class="badge bg-danger">Rejected</span>
+        {% endif %}
+      </td>
+    </tr>
+    {% if user.is_staff %}
+    <td>
+      <a href="{% url 'approve_booking' booking.id %}">Approve</a> |
+      <a href="{% url 'reject_booking' booking.id %}">Reject</a>
+    </td>
+    {% endif %} {% if booking.status == 'Approved' %}
+    <td style="color: green">Approved</td>
+    {% elif booking.status == 'Rejected' %}
+    <td style="color: red">Rejected</td>
+    {% else %}
+    <td style="color: orange">Pending</td>
+    {% endif %} {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" href="{% static 'book/base.css' %}" />
+
+<div class="auth-container">
+  <h2>Login</h2>
+
+  <form method="POST">
+    {% csrf_token %} {{ form.username.label }} {{ form.username }} {{""}}
+    {{form.password.label }} {{ form.password }}
+
+    <button type="submit">Login</button>
+  </form>
+
+  <p style="text-align: center; margin-top: 10px">
+    Don’t have an account? <a href="/">Create one</a>
+  </p>
+</div>

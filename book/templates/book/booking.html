@@ -1,26 +1,21 @@
 {% extends "book/base.html" %} {% block content %}
-<div class="container">
-  <h2>Book a Reservation</h2>
 
-  <form method="POST">
-    {% csrf_token %}
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card shadow">
+      <div class="card-body">
+        <h3 class="text-center mb-4">Book an Appointment</h3>
 
-    <label for="name">Full Name</label>
-    <input type="text" name="name" placeholder="Enter your name" required />
+        <form method="POST">
+          {% csrf_token %} {{ form.as_p }}
 
-    <label for="email">Email</label>
-    <input type="email" name="email" placeholder="Enter your email" required />
-
-    <label for="date">Booking Date</label>
-    <input type="date" name="date" required />
-
-    <label for="time">Time</label>
-    <input type="time" name="time" required />
-
-    <label for="guests">Number of Guests</label>
-    <input type="number" name="guests" min="1" value="1" />
-
-    <button type="submit" class="btn">Confirm Booking</button>
-  </form>
+          <button type="submit" class="btn btn-primary w-100 mt-3">
+            Submit Booking
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+
 {% endblock %}

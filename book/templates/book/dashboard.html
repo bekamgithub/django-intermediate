@@ -1,0 +1,37 @@
+{% extends "book/base.html" %} {% block content %}
+
+<h3 class="mb-4">Welcome, {{ user.username }} 👋</h3>
+
+<div class="mb-4">
+  <a href="{% url 'create_booking' %}" class="btn btn-primary">+ New Booking</a>
+  <a href="{% url 'booking_list' %}" class="btn btn-secondary"
+    >View All Bookings</a
+  >
+  <a href="{% url 'profile' %}" class="btn btn-outline-dark">My Profile</a>
+</div>
+
+<hr />
+
+<h4>Pending Bookings</h4>
+{% if pending %}
+<ul>
+  {% for booking in pending %}
+  <li>{{ booking.service }} – {{ booking.date }} at {{ booking.time }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No pending bookings</p>
+{% endif %}
+
+<hr />
+
+<h4>Upcoming Approved Bookings</h4>
+{% if upcoming %}
+<ul>
+  {% for booking in upcoming %}
+  <li>{{ booking.service }} – {{ booking.date }} at {{ booking.time }}</li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No upcoming bookings</p>
+{% endif %} {% endblock %}
