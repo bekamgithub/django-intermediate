@@ -1,0 +1,33 @@
+{% extends "book/base.html" %} {% block content %}
+
+<h2>Admin Dashboard</h2>
+<hr />
+
+<h4>System Overview</h4>
+<ul>
+  <li><strong>Total Bookings:</strong> {{ total_bookings }}</li>
+  <li><strong>Total Users:</strong> {{ total_users }}</li>
+  <li><strong>Pending Bookings:</strong> {{ pending }}</li>
+  <li><strong>Approved Bookings:</strong> {{ approved }}</li>
+  <li><strong>Rejected Bookings:</strong> {{ rejected }}</li>
+</ul>
+
+<hr />
+
+<h4>Service Distribution</h4>
+
+<table class="table table-striped">
+  <tr>
+    <th>Service</th>
+    <th>Count</th>
+  </tr>
+
+  {% for item in service_stats %}
+  <tr>
+    <td>{{ item.service }}</td>
+    <td>{{ item.count }}</td>
+  </tr>
+  {% endfor %}
+</table>
+
+{% endblock %}

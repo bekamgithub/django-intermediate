@@ -10,6 +10,8 @@ from django.core.mail import send_mail
 from django.conf import settings
 from django.core.mail import EmailMessage
 from django.contrib import messages
+from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.models import User
 
 
 
@@ -124,7 +126,7 @@ def edit_profile(request):
     else:
         form = EditUserForm(instance=request.user)
 
-    return render(request, "edit_profile.html", {"form": form})
+    return render(request, "book/edit_profile.html", {"form": form})
 
 @login_required
 def dashboard(request):
@@ -141,3 +143,29 @@ def dashboard(request):
     return render(request, "book/dashboard.html", context)
 
 
+
+def is_admin(user):
+    return user.is_staff or user.is_superuser
+
+@user_passes_test(is_admin)
+def admin_dashboard(request):
+    total_bookings = Booking.objects.count()
+    pending = Booking.objects.filter(status="Pending").count()
+    approved = Booking.objects.filter(status="Approved").count()
+    rejected = Booking.objects.filter(status="Rejected").count()
+    total_users = User.objects.count()
+
+    # Most popular service
+    from django.db.models import Count
+    service_stats = Booking.objects.values('service').annotate(count=Count('service')).order_by('-count')
+
+    context = {
+        "total_bookings": total_bookings,
+        "pending": pending,
+        "approved": approved,
+        "rejected": rejected,
+        "total_users": total_users,
+        "service_stats": service_stats,
+    }
+
+    return render(request, "book/admin_dashboard.html", context)

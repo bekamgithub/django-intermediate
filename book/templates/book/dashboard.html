@@ -9,6 +9,9 @@
   >
   <a href="{% url 'profile' %}" class="btn btn-outline-dark">My Profile</a>
 </div>
+<p><strong>Total Bookings:</strong> {{ bookings.count }}</p>
+<p><strong>Pending:</strong> {{ pending.count }}</p>
+<p><strong>Approved:</strong> {{ upcoming.count }}</p>
 
 <hr />
 
